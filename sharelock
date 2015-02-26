@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+
+program
+  .version(require('./package.json').version)
+  .command('sharelock <secret> [recipients...]')
+  .option('-u, --uri sharelock_uri]', 'URI of the Sharelock instance to use, https://sharelock.io by default', 'https://sharelock.io')
+  .parse(process.argv);
+
+var sharelock = require('sharelock-client').init(program.uri);
+
+if (program.commands[0].args.length < 2) {
+  console.log(program.help());
+  process.exit(1);
+}
+
+var secret = program.commands[0].args[0];
+var recipients = program.commands[0].args.slice(1);
+
+sharelock.create(secret, recipients, function (err, link) {
+  if (!err) {
+    console.log(link);
+    process.exit(0);
+  } else {
+    console.log('Something went wrong! ' + err);
+    process.exit(1);
+  }
+});

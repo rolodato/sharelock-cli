@@ -1,0 +1,19 @@
+{
+  "name": "sharelock-cli",
+  "version": "0.0.0",
+  "description": "Command-line client for https://sharelock.io",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rolodato/sharelock-cli.git"
+  },
+  "main": "./sharelock",
+  "bin": {
+    "sharelock": "./sharelock"
+  },
+  "author": "Rodrigo López Dato",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.6.0",
+    "sharelock-client": "^0.0.0"
+  }
+}
