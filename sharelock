@@ -6,10 +6,10 @@ program
   .command('sharelock <secret> [recipients...]')
   .parse(process.argv);
 
-var sharelock = require('sharelock-client').init(program.uri);
+var sharelock = require('sharelock-client').init();
 
 if (program.commands[0].args.length < 2) {
-  console.log(program.usage());
+  console.log(program.help());
   process.exit(1);
 }
 
