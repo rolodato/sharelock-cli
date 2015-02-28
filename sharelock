@@ -3,14 +3,13 @@
 var program = require('commander');
 
 program
-  .version(require('./package.json').version)
   .command('sharelock <secret> [recipients...]')
   .parse(process.argv);
 
 var sharelock = require('sharelock-client').init(program.uri);
 
 if (program.commands[0].args.length < 2) {
-  console.log(program.help());
+  console.log(program.usage());
   process.exit(1);
 }
 
