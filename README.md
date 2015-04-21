@@ -8,7 +8,11 @@ Command-line client for https://sharelock.io
 
     sharelock "my super secret" john@example.com jack@example.com
 
+
+Send the content of a file:
+
+    cat myfile.txt | sharelock john@example.com
+
 # TODO
 
-* Support input redirection, e.g. `echo foo | sharelock`
 * Support arbitrary Sharelock instances
