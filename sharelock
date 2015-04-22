@@ -6,22 +6,44 @@ program
   .command('sharelock <secret> [recipients...]')
   .parse(process.argv);
 
+
 var sharelock = require('sharelock-client').init();
 
-if (program.commands[0].args.length < 2) {
+if (program.commands[0].args.length < 1) {
   console.log(program.help());
   process.exit(1);
 }
 
-var secret = program.commands[0].args[0];
-var recipients = program.commands[0].args.slice(1);
+var use_stdin = ~program.commands[0].args[0].indexOf('@');
+var recipients =  use_stdin ? program.commands[0].args : program.commands[0].args.slice(1);
 
-sharelock.create(secret, recipients, function (err, link) {
-  if (!err) {
-    console.log(link);
-    process.exit(0);
-  } else {
-    console.log('Something went wrong! ' + err);
-    process.exit(1);
-  }
-});
+function build ( secret ) {
+  sharelock.create(secret, recipients, function (err, link) {
+    if (!err) {
+      console.log(link);
+      process.exit(0);
+    } else {
+      console.log('Something went wrong! ' + err);
+      process.exit(1);
+    }
+  });
+}
+
+if (use_stdin) {
+  var secret = '';
+
+  process.stdin.setEncoding('utf8');
+
+  process.stdin.on('readable', function() {
+    var chunk = process.stdin.read();
+    if (chunk !== null) {
+      secret += chunk;
+    }
+  });
+
+  process.stdin.on('end', function() {
+    build(secret.trim());
+  });
+} else {
+  build(program.commands[0].args[0]);
+}
