@@ -6,12 +6,12 @@ Command-line client for https://sharelock.io
 
 # Usage
 
-    sharelock "my super secret" john@example.com jack@example.com
+    sharelock "my super secret" alice@example.com bob@example.com
 
 
 Send the content of a file:
 
-    cat myfile.txt | sharelock john@example.com
+    cat myfile.txt | sharelock carol@example.com
 
 # TODO
 
